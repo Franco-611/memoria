@@ -4,19 +4,19 @@
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
       </head>
-  <body style="background-color: #585858;">
+  <body style="background-image: url('./fondo.jpg') ;">
     <div id="root"></div> 
 
     <script type="text/babel">
 
-      const Title = ({text}) => {
+      const Titulo = ({text}) => {
 
         const style = {
           width: "100%",
-          color: "white",
-          display:"flex",
+          color: "yellow",
+          display:"flex-row",
           justifyContent: "center",
-          fontSize: "60px"
+          fontSize: "40px"
         }
 
         return(
@@ -27,25 +27,47 @@
 
       }
 
-      const NavText = ({text}) => {
+      const carta = ({imagen}) => {
 
           const style = {
+            width: "100%",
+            color: "yellow",
+            display:"flex-row",
+            justifyContent: "center",
+            fontSize: "40px"
 
           }
 
-          return(text)
+          
       }
+
+      const tablero = () => {
+
+          const style = {
+            
+
+          }
+
+          
+      }
+
+      
 
       const App = () => {
 
         const atras = './Dark.jpg'
+        const imag = ['.tony/.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './spider.jpg', './strange.jpg']
 
         const [refresh, setRefresh] = React.useState(false);
         const [attempt, setAttempt] = React.useState(0);
  
         return(
           <div>
-            <Title text="Memoria"/>
+            <Titulo text="Lab 06 - Diego Franco"/>
+            <tablero>
+              
+            </tablero>
+
           </div>
         )
       }
