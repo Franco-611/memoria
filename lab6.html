@@ -36,9 +36,7 @@
 
       }
 
-      const Carta = ({url}) => {
-
-          
+      const Carta = ({url, volteo, click}) => {
 
           const style = {
             width: "200px",
@@ -53,7 +51,7 @@
 
           return(
           <div>
-              <div onClick = {() => console.log('hola')} style = {style} >  </div>
+              <div onClick = {click} style = {style} >  </div>
           </div>
         )
 
@@ -63,10 +61,41 @@
       const Tablero = ({completo}) => {
 
         const atras = './Dark.jpg'
+        const toques = React.useRef(0)
+        const ultima = React.useRef(null)
 
     
-        const [volteo, setVolteo] = React.useState(false);
+        const [volteo, setVolteo] = React.useState(completo.map(()=> false));
         const [valor, setValor] = React.useState(0);
+        
+
+        const clickHandler = (index) => {
+          if(toques.current<2){
+            const nuevos = [...volteo]
+            nuevos[index] = true
+            setVolteo(nuevos)
+            toques.current=toques.current+1
+            if(toques.current===1){
+              ultima.current=completo[index]
+              console.log(ultima.current)
+            }
+            if(toques.current===2){
+              if(ultima.current===completo[index]){
+                console.log('si son')
+              }
+              else{
+                console.log('no son')
+                setTimeout(()=>{
+                  nuevos[index] = false 
+                  setVolteo(nuevos)
+                  console.log('de lo que sea')
+                },1000)
+              }
+              
+            }
+          }
+        }
+
 
         const style = {
           display: "grid",
@@ -97,8 +126,8 @@
                 </div>
             </div>
             <div style = {style}>
-              {completo.map((url,index)=><Carta key = {index} url = {url} volteo = {volteo}/>)}
-            </div>
+              {completo.map((url,index)=><Carta key = {index} url = {volteo[index]? url : atras} volteo = {volteo[index]} click = {() => clickHandler(index)}/>)}
+            </div> 
           </div>
         )
 
@@ -110,12 +139,6 @@
         const completo = ['./tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg',
         './tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg'].sort( () => 0.5-Math.random())
 
-        /*const completo = [['./tony.jpg' , false], ['./cap.jpg' , false], ['./thor.jpg' , false], ['./pantera.jpg' , false], ['./thanos.jpg' , false], ['./viuda.jpg' , false], ['./bucky.jpg' , false], ['./ant.jpg' , false],
-        ['./tony.jpg' , false], ['./cap.jpg' , false], ['./thor.jpg' , false], ['./pantera.jpg' , false], ['./thanos.jpg' , false], ['./viuda.jpg' , false], ['./bucky.jpg' , false], ['./ant.jpg' , false]].sort( () => 0.5-Math.random())*/
-
-        /*const completo = ['./Dark.jpg', './Dark.jpg', './Dark.jpg', './Dark.jpg', './Dark.jpg', './Dark.jpg', './bucky.jpg', './ant.jpg',
-        './tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg'].sort( () => 0.5-Math.random())*/
- 
         return(
           <div>
             <Titulo tit="Lab 06 - Diego Franco" rest="Reiniciar" cont="Intentos" />
