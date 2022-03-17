@@ -3,71 +3,123 @@
         <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+        <style>
+          body {
+            background-image: url('./fondo.jpg');
+            background-repeat:'no-repeat' ;
+            background-size: 'cover'
+          }
+        </style>
       </head>
-  <body style="background-image: url('./fondo.jpg') ;">
+  <body>
     <div id="root"></div> 
 
     <script type="text/babel">
 
-      const Titulo = ({text}) => {
+      const Titulo = ({tit, rest, cont}) => {
+
+        
 
         const style = {
           width: "100%",
           color: "yellow",
-          display:"flex-row",
+          display:"flex",
           justifyContent: "center",
           fontSize: "40px"
         }
 
         return(
           <div>
-              <h1 style = {style} > {text} </h1>
+              <h1 style = {style} > {tit} </h1>     
           </div>
         )
 
       }
 
-      const carta = ({imagen}) => {
+      const Carta = ({url}) => {
 
           const style = {
-            width: "100%",
-            color: "yellow",
-            display:"flex-row",
+            width: "200px",
+            height: "250px",
+            display:"flex",
             justifyContent: "center",
-            fontSize: "40px"
-
+            fontSize: "10px",
+            backgroundImage: `url(${url})`,
+            backgroundSize: 'cover'
+          
           }
+
+          return(
+          <div>
+              <div style = {style} >  </div>
+          </div>
+        )
 
           
       }
 
-      const tablero = () => {
+      const Tablero = ({completo}) => {
 
-          const style = {
-            
+        const atras = './Dark.jpg'
 
-          }
+    
+        const [refresh, setRefresh] = React.useState(false);
+        const [attempt, setAttempt] = React.useState(0);
+        const [valor, setValor] = React.useState(0);
 
-          
+        const style = {
+          display: "grid",
+          gridTemplateColumns: "repeat(4,200px)",
+          gridTemplateRows: "repeat(4,250px)",
+          gridRowGap : "20px",
+          columnGap: "10px",
+          gridcolumnGap : "20px",
+          justifyContent: "center",
+
+        }
+        const sal = {
+          width: "100%",
+          color: "yellow",
+          display:"flex",
+          justifyContent: "space-around",
+          fontSize: "20px"
+        }
+
+        return(
+
+          <div>
+            <div style = {sal} >
+                <div >
+                  <h1 > Reiniciar </h1>
+                </div>
+                <div >
+                  <h1>  Intentos =  {valor}</h1>
+                </div>
+            </div>
+
+            <div style = {style}>
+              {completo.map((url,index)=><Carta key = {index} url = {url} />)}
+            </div>
+          </div>
+        )
+
+
       }
 
       
 
       const App = () => {
 
-        const atras = './Dark.jpg'
-        const imag = ['.tony/.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './spider.jpg', './strange.jpg']
+        const completo = ['./tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg',
+        './tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg'].sort( () => 0.5-Math.random())
 
-        const [refresh, setRefresh] = React.useState(false);
-        const [attempt, setAttempt] = React.useState(0);
+        
+
  
         return(
           <div>
-            <Titulo text="Lab 06 - Diego Franco"/>
-            <tablero>
-              
-            </tablero>
-
+            <Titulo tit="Lab 06 - Diego Franco" rest="Reiniciar" cont="Intentos" />
+            <Tablero completo = {completo}/>
           </div>
         )
       }
