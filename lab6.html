@@ -38,6 +38,8 @@
 
       const Carta = ({url}) => {
 
+          
+
           const style = {
             width: "200px",
             height: "250px",
@@ -51,7 +53,7 @@
 
           return(
           <div>
-              <div style = {style} >  </div>
+              <div onClick = {() => console.log('hola')} style = {style} >  </div>
           </div>
         )
 
@@ -63,8 +65,7 @@
         const atras = './Dark.jpg'
 
     
-        const [refresh, setRefresh] = React.useState(false);
-        const [attempt, setAttempt] = React.useState(0);
+        const [volteo, setVolteo] = React.useState(false);
         const [valor, setValor] = React.useState(0);
 
         const style = {
@@ -86,19 +87,17 @@
         }
 
         return(
-
           <div>
             <div style = {sal} >
-                <div >
+                <div onClick = {() => location.reload()}>
                   <h1 > Reiniciar </h1>
                 </div>
                 <div >
                   <h1>  Intentos =  {valor}</h1>
                 </div>
             </div>
-
             <div style = {style}>
-              {completo.map((url,index)=><Carta key = {index} url = {url} />)}
+              {completo.map((url,index)=><Carta key = {index} url = {url} volteo = {volteo}/>)}
             </div>
           </div>
         )
@@ -106,15 +105,16 @@
 
       }
 
-      
-
       const App = () => {
 
         const completo = ['./tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg',
         './tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg'].sort( () => 0.5-Math.random())
 
-        
+        /*const completo = [['./tony.jpg' , false], ['./cap.jpg' , false], ['./thor.jpg' , false], ['./pantera.jpg' , false], ['./thanos.jpg' , false], ['./viuda.jpg' , false], ['./bucky.jpg' , false], ['./ant.jpg' , false],
+        ['./tony.jpg' , false], ['./cap.jpg' , false], ['./thor.jpg' , false], ['./pantera.jpg' , false], ['./thanos.jpg' , false], ['./viuda.jpg' , false], ['./bucky.jpg' , false], ['./ant.jpg' , false]].sort( () => 0.5-Math.random())*/
 
+        /*const completo = ['./Dark.jpg', './Dark.jpg', './Dark.jpg', './Dark.jpg', './Dark.jpg', './Dark.jpg', './bucky.jpg', './ant.jpg',
+        './tony.jpg', './cap.jpg', './thor.jpg', './pantera.jpg', './thanos.jpg', './viuda.jpg', './bucky.jpg', './ant.jpg'].sort( () => 0.5-Math.random())*/
  
         return(
           <div>
