@@ -16,10 +16,9 @@
 
     <script type="text/babel">
 
-      const Titulo = ({tit, rest, cont}) => {
+      const Titulo = ({tit}) => {
 
-        
-
+      
         const style = {
           width: "100%",
           color: "yellow",
@@ -36,6 +35,44 @@
 
       }
 
+      const Ganaste = () =>{
+        const style = {
+          backgroundImage: `url('./ganaste.jpg')`,
+          backgroundSize: 'cover',
+          width: "100%",
+          height: "50%",
+          color: "yellow",
+          display:"flex-row",
+          justifyContent: "center",
+          fontSize: "40px"
+        }
+        const text = {
+          width: "80%",
+          color: "yellow",
+          display:"flex",
+          justifyContent: "center",
+          fontSize: "200px",
+          marginTop: "40px",
+          marginLeft: "150px"
+        }
+        const text1 = {
+          width: "80%",
+          color: "yellow",
+          display:"flex",
+          justifyContent: "center",
+          fontSize: "50px",
+          marginTop: "-116px",
+          marginLeft: "150px"
+        }
+        return(
+          <div style = {style} onClick = {() => location.reload()}>
+            <h1 style = {text} > Ganaste </h1> 
+            <h1 style = {text1} > Preciona para reiniciar </h1> 
+          </div>
+        )
+        
+      }
+
       const Carta = ({url, volteo, click}) => {
 
           const style = {
@@ -46,12 +83,11 @@
             fontSize: "10px",
             backgroundImage: `url(${url})`,
             backgroundSize: 'cover'
-          
           }
 
           return(
           <div>
-              <div onClick = {click} style = {style} >  </div>
+              <div onClick = {click} style = {style} />  
           </div>
         )
 
@@ -63,33 +99,52 @@
         const atras = './Dark.jpg'
         const toques = React.useRef(0)
         const ultima = React.useRef(null)
+        const penultima = React.useRef(null)
+        const ganar = React.useRef(0)
+        const gana = React.useRef(false)
+
+        if(ganar===8){
+          gana.current = true
+        }
+        
+        console.log(ganar.current)
+        console.log(gana)
+
 
     
         const [volteo, setVolteo] = React.useState(completo.map(()=> false));
         const [valor, setValor] = React.useState(0);
         
-
+        
         const clickHandler = (index) => {
-          if(toques.current<2){
+          if(toques.current<2 && volteo[index]===false){
             const nuevos = [...volteo]
             nuevos[index] = true
             setVolteo(nuevos)
             toques.current=toques.current+1
             if(toques.current===1){
               ultima.current=completo[index]
-              console.log(ultima.current)
+              penultima.current=index
+      
             }
             if(toques.current===2){
               if(ultima.current===completo[index]){
-                console.log('si son')
+                ganar.current++
+                toques.current = 0
+                ultima.current = null
+                penultima.current = null
               }
               else{
-                console.log('no son')
                 setTimeout(()=>{
-                  nuevos[index] = false 
-                  setVolteo(nuevos)
-                  console.log('de lo que sea')
+                  const old = [...volteo]
+                  old[index] = false 
+                  old[penultima.current] = false 
+                  setVolteo(old)
+                  toques.current = 0
+                  ultima.current = null
+                  penultima.current = null
                 },1000)
+                setValor(valor+1)
               }
               
             }
@@ -125,9 +180,12 @@
                   <h1>  Intentos =  {valor}</h1>
                 </div>
             </div>
-            <div style = {style}>
+            {gana.current? <Ganaste/> :
+              <div style = {style}>
               {completo.map((url,index)=><Carta key = {index} url = {volteo[index]? url : atras} volteo = {volteo[index]} click = {() => clickHandler(index)}/>)}
-            </div> 
+              </div>
+            }
+             
           </div>
         )
 
@@ -141,7 +199,7 @@
 
         return(
           <div>
-            <Titulo tit="Lab 06 - Diego Franco" rest="Reiniciar" cont="Intentos" />
+            <Titulo tit="Lab 06 - Diego Franco" />
             <Tablero completo = {completo}/>
           </div>
         )
