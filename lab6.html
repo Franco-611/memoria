@@ -67,13 +67,14 @@
         return(
           <div style = {style} onClick = {() => location.reload()}>
             <h1 style = {text} > Ganaste </h1> 
-            <h1 style = {text1} > Preciona para reiniciar </h1> 
+            <h1 style = {text1} > Presiona para reiniciar </h1> 
           </div>
         )
         
       }
 
-      const Carta = ({url, volteo, click}) => {
+      const Carta = ({rotation, url, volteo, click}) => {
+        console.log(rotation)
 
           const style = {
             width: "200px",
@@ -84,9 +85,16 @@
             backgroundImage: `url(${url})`,
             backgroundSize: 'cover'
           }
+          const style1 = {
+            width: "200px",
+            height: "250px",
+            transition: 'all 1s ease-out',
+            transformStyle: 'preserve-3d'
+          }
+          
 
           return(
-          <div>
+          <div style = {{...style1,transform:rotation}}>
               <div onClick = {click} style = {style} />  
           </div>
         )
@@ -127,6 +135,7 @@
                 if(ganar.current===8){
                   gana.current = true
                 }
+                setValor(valor+1)
               }
               else{
                 setTimeout(()=>{
@@ -154,6 +163,7 @@
           columnGap: "10px",
           gridcolumnGap : "20px",
           justifyContent: "center",
+          paddingTop: "10px"
 
         }
         const sal = {
@@ -161,22 +171,32 @@
           color: "yellow",
           display:"flex",
           justifyContent: "space-around",
-          fontSize: "20px"
+          fontSize: "20px",
+        }
+        const sal1 = {
+          backgroundColor:"#34800C",
+          color: "yellow",
+          display:"flex",
+          justifyContent: "space-around",
+          fontSize: "20px",
+          borderRadius: "40px",
+          paddingLeft: "9px",
+          paddingRight: "9px",
         }
 
         return(
           <div>
             <div style = {sal} >
-                <div onClick = {() => location.reload()}>
+                <div style = {sal1} onClick = {() => location.reload()}>
                   <h1 > Reiniciar </h1>
                 </div>
-                <div >
+                <div style = {sal1}>
                   <h1>  Intentos =  {valor}</h1>
                 </div>
             </div>
             {gana.current? <Ganaste/> :
               <div style = {style}>
-              {completo.map((url,index)=><Carta key = {index} url = {volteo[index]? url : atras} volteo = {volteo[index]} click = {() => clickHandler(index)}/>)}
+              {completo.map((url,index)=><Carta rotation = {volteo[index]? 'rotateY(180deg)': 'rotateY(0deg)'} key = {index} url = {volteo[index]? url : atras} volteo = {volteo[index]} click = {() => clickHandler(index)}/>)}
               </div>
             }
              
