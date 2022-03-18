@@ -102,15 +102,6 @@
         const penultima = React.useRef(null)
         const ganar = React.useRef(0)
         const gana = React.useRef(false)
-
-        if(ganar===8){
-          gana.current = true
-        }
-        
-        console.log(ganar.current)
-        console.log(gana)
-
-
     
         const [volteo, setVolteo] = React.useState(completo.map(()=> false));
         const [valor, setValor] = React.useState(0);
@@ -133,6 +124,9 @@
                 toques.current = 0
                 ultima.current = null
                 penultima.current = null
+                if(ganar.current===8){
+                  gana.current = true
+                }
               }
               else{
                 setTimeout(()=>{
